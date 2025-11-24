@@ -24,7 +24,7 @@
             padding: 40px 0;
         }
         .hero-content { flex: 1; }
-        .hero-demo { flex: 1; display: flex; justify-content: center; }
+        .hero-demo { flex: 1; }
 
         .logo { margin-bottom: 30px; }
         .logo svg { width: 80px; height: 80px; }
@@ -53,13 +53,13 @@
             box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
         }
 
-        /* Interactive Demo */
+        /* Interactive Chain Builder */
         .demo-container {
             background: #2A2A2A;
             border-radius: 24px;
             padding: 32px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
+            max-width: 450px;
         }
         .demo-header {
             text-align: center;
@@ -99,38 +99,103 @@
             font-size: 14px;
         }
 
-        .demo-links {
-            space-y: 12px;
+        .chain-builder {
+            margin-bottom: 24px;
         }
-        .demo-link {
-            background: #333;
-            border-radius: 12px;
-            padding: 16px;
+        .builder-section {
+            margin-bottom: 20px;
+        }
+        .builder-title {
+            color: #FF6B35;
+            font-size: 16px;
+            font-weight: 600;
             margin-bottom: 12px;
+        }
+
+        .exercise-input {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .exercise-input input {
+            flex: 1;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 10px;
+            color: #FFF;
+            font-size: 14px;
+        }
+        .exercise-input input:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+        .time-input {
+            width: 60px;
+            text-align: center;
+        }
+
+        .add-exercise {
+            background: #FF6B35;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            transition: background 0.2s ease;
+        }
+        .add-exercise:hover { background: #FF8E53; }
+
+        .chain-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+        .chain-item {
+            background: #333;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             cursor: pointer;
             transition: background 0.2s ease;
             border: 2px solid transparent;
         }
-        .demo-link:hover { background: #3A3A3A; }
-        .demo-link.active { border-color: #FF6B35; background: #2A1A1A; }
-        .link-name { font-weight: 600; margin-bottom: 4px; }
-        .link-times { color: #888; font-size: 14px; }
+        .chain-item:hover { background: #3A3A3A; }
+        .chain-item.active { border-color: #FF6B35; background: #2A1A1A; }
+        .chain-name { font-weight: 600; margin-bottom: 4px; }
+        .chain-times { color: #888; font-size: 12px; }
+        .remove-exercise {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .remove-exercise:hover { background: #FF6B35; }
 
         .demo-controls {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             justify-content: center;
-            margin-top: 24px;
         }
         .control-btn {
             background: #FF6B35;
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s ease;
+            font-size: 14px;
         }
         .control-btn:hover { background: #FF8E53; }
         .control-btn:disabled { background: #555; cursor: not-allowed; }
@@ -178,10 +243,115 @@
             font-size: 16px;
         }
 
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 100%);
+            text-align: center;
+        }
+        .pricing h2 {
+            font-size: 42px;
+            color: #FF6B35;
+            margin-bottom: 20px;
+        }
+        .pricing-subtitle {
+            font-size: 20px;
+            color: #CCCCCC;
+            margin-bottom: 60px;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.2);
+        }
+        .pricing-card.featured {
+            border: 2px solid #FF6B35;
+            position: relative;
+        }
+        .featured-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FF6B35;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .pricing-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #FFFFFF;
+        }
+        .pricing-price {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FF6B35;
+            margin-bottom: 8px;
+        }
+        .pricing-period {
+            color: #AAAAAA;
+            margin-bottom: 32px;
+        }
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+        .pricing-features li {
+            padding: 8px 0;
+            color: #CCCCCC;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pricing-features li::before {
+            content: "✓";
+            color: #FF6B35;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .pricing-cta {
+            background: #FF6B35;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-block;
+            transition: background 0.2s ease;
+        }
+        .pricing-cta:hover { background: #FF8E53; }
+        .pricing-cta.secondary {
+            background: transparent;
+            border: 2px solid #FF6B35;
+            color: #FF6B35;
+        }
+        .pricing-cta.secondary:hover {
+            background: #FF6B35;
+            color: white;
+        }
+
         /* Features */
         .features {
             padding: 100px 0;
-            background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 100%);
         }
         .features h2 {
             text-align: center;
@@ -252,8 +422,9 @@
             .hero-description { font-size: 16px; }
             .demo-container { max-width: 100%; }
             .timer-time { font-size: 36px; }
-            .screenshots h2, .features h2 { font-size: 32px; }
-            .feature { padding: 32px 24px; }
+            .screenshots h2, .features h2, .pricing h2 { font-size: 32px; }
+            .feature, .pricing-card { padding: 32px 24px; }
+            .pricing-price { font-size: 36px; }
         }
     </style>
 </head>
@@ -282,38 +453,45 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.99 3.68-.84 1.51.2 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.64 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                     </svg>
-                    Download on App Store
+                    Try ChainFlow Free
                 </a>
             </div>
 
             <div class="hero-demo">
                 <div class="demo-container">
-                    <div class="demo-header">Try ChainFlow Demo</div>
+                    <div class="demo-header">Build Your Chain</div>
 
                     <div class="timer-display">
-                        <div class="timer-phase" id="currentPhase">SETUP</div>
-                        <div class="timer-time" id="currentTime">0:10</div>
-                        <div class="timer-exercise" id="currentExercise">Push-ups</div>
-                        <div class="timer-progress" id="currentProgress">Link 1 of 3</div>
+                        <div class="timer-phase" id="currentPhase">READY</div>
+                        <div class="timer-time" id="currentTime">0:00</div>
+                        <div class="timer-exercise" id="currentExercise">Add exercises below</div>
+                        <div class="timer-progress" id="currentProgress">Chain: 0 exercises</div>
                     </div>
 
-                    <div class="demo-links">
-                        <div class="demo-link active" data-link="0">
-                            <div class="link-name">Push-ups</div>
-                            <div class="link-times">Setup 10s • Work 30s • Rest 15s</div>
+                    <div class="chain-builder">
+                        <div class="builder-section">
+                            <div class="builder-title">Add Exercise</div>
+                            <div class="exercise-input">
+                                <input type="text" id="exerciseName" placeholder="Exercise name" maxlength="20">
+                                <input type="number" id="setupTime" class="time-input" placeholder="10" min="0" max="300" title="Setup time (seconds)">
+                                <input type="number" id="workTime" class="time-input" placeholder="30" min="1" max="600" title="Work time (seconds)">
+                                <input type="number" id="restTime" class="time-input" placeholder="15" min="0" max="300" title="Rest time (seconds)">
+                            </div>
+                            <button class="add-exercise" id="addExercise">+ Add to Chain</button>
                         </div>
-                        <div class="demo-link" data-link="1">
-                            <div class="link-name">Squats</div>
-                            <div class="link-times">Setup 10s • Work 45s • Rest 15s</div>
-                        </div>
-                        <div class="demo-link" data-link="2">
-                            <div class="link-name">Plank</div>
-                            <div class="link-times">Setup 10s • Work 60s • Rest 0s</div>
+
+                        <div class="builder-section">
+                            <div class="builder-title">Your Chain</div>
+                            <div class="chain-list" id="chainList">
+                                <div style="text-align: center; color: #888; padding: 20px; font-size: 14px;">
+                                    Add exercises above to build your chain
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="demo-controls">
-                        <button class="control-btn" id="startBtn">▶ Start</button>
+                        <button class="control-btn" id="startBtn" disabled>▶ Start</button>
                         <button class="control-btn" id="pauseBtn" disabled>⏸ Pause</button>
                         <button class="control-btn" id="resetBtn">↻ Reset</button>
                     </div>
@@ -325,28 +503,72 @@
     <!-- Screenshots Section -->
     <div class="screenshots">
         <div class="container">
-            <h2>See ChainFlow in Action</h2>
-            <p class="screenshots-subtitle">Real screenshots from the iOS app</p>
+            <h2>ChainFlow in Action</h2>
+            <p class="screenshots-subtitle">See the full app experience</p>
 
             <div class="screenshots-grid">
                 <div class="screenshot-item">
                     <img src="/assets/screenshots/screenshot_1_timer_6_5.png" alt="ChainFlow Timer" class="screenshot-img">
-                    <div class="screenshot-title">Smart Timer</div>
-                    <div class="screenshot-desc">Visual countdown with phase transitions and exercise names</div>
+                    <div class="screenshot-title">Smart Timer Interface</div>
+                    <div class="screenshot-desc">Visual countdown with clear phase transitions and exercise names</div>
                 </div>
 
                 <div class="screenshot-item">
                     <img src="/assets/screenshots/screenshot_2_chains_6_5.png" alt="Saved Chains" class="screenshot-img">
-                    <div class="screenshot-title">Saved Chains</div>
-                    <div class="screenshot-desc">Build a library of workout routines for quick access</div>
+                    <div class="screenshot-title">Save & Organize</div>
+                    <div class="screenshot-desc">Build a library of workout routines for instant access</div>
                 </div>
 
                 <div class="screenshot-item">
                     <img src="/assets/screenshots/screenshot_4_create_6_5.png" alt="Chain Builder" class="screenshot-img">
-                    <div class="screenshot-title">Chain Builder</div>
-                    <div class="screenshot-desc">Intuitive interface to create custom sequences</div>
+                    <div class="screenshot-title">Easy Chain Building</div>
+                    <div class="screenshot-desc">Intuitive interface to create custom workout sequences</div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Pricing Section -->
+    <div class="pricing">
+        <div class="container">
+            <h2>Simple Pricing</h2>
+            <p class="pricing-subtitle">Start free, upgrade when you're ready</p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-title">Free</div>
+                    <div class="pricing-price">$0</div>
+                    <div class="pricing-period">Forever</div>
+                    <ul class="pricing-features">
+                        <li>Up to 5 chains</li>
+                        <li>Basic timer features</li>
+                        <li>Share chains with friends</li>
+                        <li>Audio & haptic feedback</li>
+                        <li>Local storage</li>
+                    </ul>
+                    <a href="https://apps.apple.com/app/chainflow" class="pricing-cta secondary">Download Free</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <div class="pricing-title">Pro</div>
+                    <div class="pricing-price">$5</div>
+                    <div class="pricing-period">One-time purchase</div>
+                    <ul class="pricing-features">
+                        <li>Unlimited chains</li>
+                        <li>Cloud sync across devices</li>
+                        <li>Premium themes</li>
+                        <li>Advanced sound options</li>
+                        <li>Priority support</li>
+                        <li>Future updates included</li>
+                    </ul>
+                    <a href="https://apps.apple.com/app/chainflow" class="pricing-cta">Get ChainFlow Pro</a>
+                </div>
+            </div>
+
+            <p style="margin-top: 40px; color: #888; font-size: 16px;">
+                No subscriptions. No recurring fees. Buy once, use forever.
+            </p>
         </div>
     </div>
 
@@ -377,8 +599,8 @@
 
                 <div class="feature">
                     <span class="feature-icon">📤</span>
-                    <h3>Share Workouts</h3>
-                    <p>Build once, share with friends. Send complete workout routines via chainflow:// links instantly.</p>
+                    <h3>Share Chains Instantly</h3>
+                    <p>Share any chain with friends via chainflow:// links. Free users can receive and use shared chains from anyone with the app.</p>
                 </div>
 
                 <div class="feature">
@@ -406,16 +628,11 @@
     </div>
 
     <script>
-        // Demo Timer Functionality
-        const demoData = [
-            { name: "Push-ups", setup: 10, work: 30, rest: 15 },
-            { name: "Squats", setup: 10, work: 45, rest: 15 },
-            { name: "Plank", setup: 10, work: 60, rest: 0 }
-        ];
-
+        // Interactive Chain Builder
+        let userChain = [];
         let currentLinkIndex = 0;
-        let currentPhase = 'setup'; // 'setup', 'work', 'rest'
-        let timeRemaining = 10;
+        let currentPhase = 'ready'; // 'ready', 'setup', 'work', 'rest'
+        let timeRemaining = 0;
         let isRunning = false;
         let timerInterval = null;
 
@@ -426,23 +643,110 @@
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const resetBtn = document.getElementById('resetBtn');
-        const linkElements = document.querySelectorAll('.demo-link');
+        const chainListElement = document.getElementById('chainList');
+        const addExerciseBtn = document.getElementById('addExercise');
 
         function updateDisplay() {
-            const currentLink = demoData[currentLinkIndex];
+            if (userChain.length === 0) {
+                phaseElement.textContent = 'READY';
+                timeElement.textContent = '0:00';
+                exerciseElement.textContent = 'Add exercises below';
+                progressElement.textContent = 'Chain: 0 exercises';
+                startBtn.disabled = true;
+                return;
+            }
+
+            const currentLink = userChain[currentLinkIndex];
             phaseElement.textContent = currentPhase.toUpperCase();
             timeElement.textContent = `${Math.floor(timeRemaining / 60)}:${(timeRemaining % 60).toString().padStart(2, '0')}`;
             exerciseElement.textContent = currentLink.name;
-            progressElement.textContent = `Link ${currentLinkIndex + 1} of ${demoData.length}`;
+            progressElement.textContent = `Link ${currentLinkIndex + 1} of ${userChain.length}`;
+            startBtn.disabled = false;
+        }
 
-            // Update active link
-            linkElements.forEach((el, i) => {
-                el.classList.toggle('active', i === currentLinkIndex);
+        function renderChainList() {
+            if (userChain.length === 0) {
+                chainListElement.innerHTML = `
+                    <div style="text-align: center; color: #888; padding: 20px; font-size: 14px;">
+                        Add exercises above to build your chain
+                    </div>`;
+                updateDisplay();
+                return;
+            }
+
+            chainListElement.innerHTML = userChain.map((exercise, index) => `
+                <div class="chain-item ${index === currentLinkIndex ? 'active' : ''}" data-index="${index}">
+                    <div>
+                        <div class="chain-name">${exercise.name}</div>
+                        <div class="chain-times">Setup ${exercise.setup}s • Work ${exercise.work}s • Rest ${exercise.rest}s</div>
+                    </div>
+                    <button class="remove-exercise" onclick="removeExercise(${index})">✕</button>
+                </div>
+            `).join('');
+
+            // Add click listeners to chain items
+            document.querySelectorAll('.chain-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('remove-exercise')) return;
+                    selectExercise(parseInt(item.dataset.index));
+                });
             });
+
+            updateDisplay();
+        }
+
+        function addExercise() {
+            const name = document.getElementById('exerciseName').value.trim();
+            const setup = parseInt(document.getElementById('setupTime').value) || 10;
+            const work = parseInt(document.getElementById('workTime').value) || 30;
+            const rest = parseInt(document.getElementById('restTime').value) || 15;
+
+            if (!name) {
+                alert('Please enter an exercise name');
+                return;
+            }
+
+            if (work < 1) {
+                alert('Work time must be at least 1 second');
+                return;
+            }
+
+            userChain.push({ name, setup, work, rest });
+
+            // Clear inputs
+            document.getElementById('exerciseName').value = '';
+            document.getElementById('setupTime').value = '';
+            document.getElementById('workTime').value = '';
+            document.getElementById('restTime').value = '';
+
+            // Set default values for next exercise
+            document.getElementById('setupTime').placeholder = '10';
+            document.getElementById('workTime').placeholder = '30';
+            document.getElementById('restTime').placeholder = '15';
+
+            renderChainList();
+        }
+
+        function removeExercise(index) {
+            userChain.splice(index, 1);
+            if (currentLinkIndex >= userChain.length) {
+                currentLinkIndex = Math.max(0, userChain.length - 1);
+            }
+            resetTimer();
+            renderChainList();
+        }
+
+        function selectExercise(index) {
+            if (!isRunning) {
+                currentLinkIndex = index;
+                currentPhase = 'setup';
+                timeRemaining = userChain[index].setup;
+                renderChainList();
+            }
         }
 
         function nextPhase() {
-            const currentLink = demoData[currentLinkIndex];
+            const currentLink = userChain[currentLinkIndex];
 
             if (currentPhase === 'setup') {
                 currentPhase = 'work';
@@ -461,16 +765,17 @@
 
         function nextLink() {
             currentLinkIndex++;
-            if (currentLinkIndex >= demoData.length) {
+            if (currentLinkIndex >= userChain.length) {
                 // Workout complete
                 stopTimer();
-                alert('🎉 Workout Complete!');
+                alert('🎉 Chain Complete! Great work!');
                 resetTimer();
                 return;
             }
 
             currentPhase = 'setup';
-            timeRemaining = demoData[currentLinkIndex].setup;
+            timeRemaining = userChain[currentLinkIndex].setup;
+            renderChainList();
         }
 
         function runTimer() {
@@ -483,7 +788,13 @@
         }
 
         function startTimer() {
+            if (userChain.length === 0) return;
+
             if (!isRunning) {
+                if (currentPhase === 'ready') {
+                    currentPhase = 'setup';
+                    timeRemaining = userChain[currentLinkIndex].setup;
+                }
                 isRunning = true;
                 timerInterval = setInterval(runTimer, 1000);
                 startBtn.disabled = true;
@@ -510,28 +821,34 @@
         function resetTimer() {
             stopTimer();
             currentLinkIndex = 0;
-            currentPhase = 'setup';
-            timeRemaining = demoData[0].setup;
-            updateDisplay();
+            currentPhase = userChain.length > 0 ? 'setup' : 'ready';
+            timeRemaining = userChain.length > 0 ? userChain[0].setup : 0;
+            renderChainList();
         }
 
         // Event listeners
+        addExerciseBtn.addEventListener('click', addExercise);
         startBtn.addEventListener('click', startTimer);
         pauseBtn.addEventListener('click', pauseTimer);
         resetBtn.addEventListener('click', resetTimer);
 
-        linkElements.forEach((el, i) => {
-            el.addEventListener('click', () => {
-                stopTimer();
-                currentLinkIndex = i;
-                currentPhase = 'setup';
-                timeRemaining = demoData[i].setup;
-                updateDisplay();
-            });
+        // Allow Enter key to add exercise
+        document.getElementById('exerciseName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addExercise();
+        });
+
+        // Add some example exercises on load
+        window.addEventListener('load', () => {
+            userChain = [
+                { name: "Push-ups", setup: 10, work: 30, rest: 15 },
+                { name: "Squats", setup: 10, work: 45, rest: 15 },
+                { name: "Plank", setup: 10, work: 60, rest: 0 }
+            ];
+            renderChainList();
         });
 
         // Initialize display
-        updateDisplay();
+        renderChainList();
     </script>
 </body>
 </html>
