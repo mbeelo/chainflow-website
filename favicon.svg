@@ -1,0 +1,10 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .chain-link { fill: none; stroke: #FF6B35; stroke-width: 4; }
+    </style>
+  </defs>
+  <rect class="chain-link" x="15" y="25" width="40" height="22" rx="6" ry="6"/>
+  <rect class="chain-link" x="40" y="49" width="40" height="22" rx="6" ry="6"/>
+  <rect class="chain-link" x="65" y="73" width="40" height="22" rx="6" ry="6"/>
+</svg>

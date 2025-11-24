@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="dynamic-title">Someone shared a ChainFlow workout with you</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Dynamic Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="" id="og-url">
+    <meta property="og:title" content="" id="og-title">
+    <meta property="og:description" content="" id="og-description">
+    <meta property="og:image" content="https://chainflow.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="" id="twitter-url">
+    <meta name="twitter:title" content="" id="twitter-title">
+    <meta name="twitter:description" content="" id="twitter-description">
+    <meta name="twitter:image" content="https://chainflow.app/og-image.png">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #1A1A1A;
+            color: #FFFFFF;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            text-decoration: none;
+            color: inherit;
+        }
+        .logo svg { width: 60px; height: 60px; }
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .logo .chain { color: #FFFFFF; }
+        .logo .flow {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8E53 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .chain-preview {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .chain-title {
+            font-size: 28px;
+            color: #FF6B35;
+            margin-bottom: 10px;
+        }
+
+        .chain-stats {
+            font-size: 16px;
+            color: #CCCCCC;
+            margin-bottom: 30px;
+        }
+
+        .chain-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #2A2A2A;
+            border-radius: 12px;
+            border-left: 4px solid #FF6B35;
+        }
+
+        .link-name {
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .link-time {
+            font-size: 14px;
+            color: #888;
+            font-family: 'SF Mono', Monaco, monospace;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8E53 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #FF6B35;
+            border: 2px solid #FF6B35;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 107, 53, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            background: rgba(255, 59, 48, 0.2);
+            border: 1px solid rgba(255, 59, 48, 0.5);
+            color: #FF3B30;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .chain-preview { padding: 30px 20px; }
+            .logo h1 { font-size: 24px; }
+            .chain-title { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="logo">
+            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="15" y="25" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                <rect x="40" y="49" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                <rect x="65" y="73" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+            </svg>
+            <h1><span class="chain">Chain</span><span class="flow">Flow</span></h1>
+        </a>
+
+        <div id="loading-state">
+            <div class="chain-preview">
+                <div class="chain-title">Loading shared chain...</div>
+                <div class="chain-stats">Parsing chain data...</div>
+            </div>
+        </div>
+
+        <div id="error-state" style="display: none;">
+            <div class="error-message">
+                <strong>Invalid Chain Link</strong><br>
+                This chain link appears to be corrupted or invalid. Please ask the sender to share it again.
+            </div>
+            <div class="cta-buttons">
+                <a href="/" class="btn btn-primary">Discover ChainFlow</a>
+                <a href="/contact" class="btn btn-secondary">Need Help?</a>
+            </div>
+        </div>
+
+        <div id="chain-state" style="display: none;">
+            <div class="chain-preview">
+                <div class="chain-title" id="chain-name">Amazing Workout</div>
+                <div class="chain-stats" id="chain-stats">5 exercises • 25 minutes total</div>
+
+                <div class="chain-links" id="chain-links">
+                    <!-- Links populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="openInApp()">Open in ChainFlow</button>
+                <a href="/" class="btn btn-secondary">Get ChainFlow Free</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Emotional copy variations for different chain types
+        const emotionalCopy = {
+            workout: [
+                "Ready to crush this workout?",
+                "Time to unleash your inner athlete",
+                "Your next breakthrough awaits",
+                "Let's build some serious momentum"
+            ],
+            meditation: [
+                "Find your center with this flow",
+                "Peace is just a breath away",
+                "Your mindful moment starts here",
+                "Discover your inner calm"
+            ],
+            productivity: [
+                "Ready to enter deep focus mode?",
+                "Your most productive day starts now",
+                "Time to make magic happen",
+                "Let's build unstoppable momentum"
+            ],
+            study: [
+                "Knowledge awaits your focus",
+                "Your learning breakthrough starts here",
+                "Ready to level up your mind?",
+                "Time to unlock your potential"
+            ],
+            default: [
+                "Someone believes in your potential",
+                "Your perfect rhythm awaits",
+                "Ready to build something amazing?",
+                "Time to discover your flow"
+            ]
+        };
+
+        function getEmotionalCopy(chainName, linkCount) {
+            const name = chainName.toLowerCase();
+            let category = 'default';
+
+            if (name.includes('workout') || name.includes('hiit') || name.includes('cardio') || name.includes('strength')) {
+                category = 'workout';
+            } else if (name.includes('meditation') || name.includes('mindful') || name.includes('breath')) {
+                category = 'meditation';
+            } else if (name.includes('work') || name.includes('focus') || name.includes('productivity')) {
+                category = 'productivity';
+            } else if (name.includes('study') || name.includes('learn') || name.includes('research')) {
+                category = 'study';
+            }
+
+            const options = emotionalCopy[category];
+            return options[Math.floor(Math.random() * options.length)];
+        }
+
+        function formatTime(totalSeconds) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function getTotalTime(links) {
+            return links.reduce((total, link) => {
+                return total + (link.setupTime || 0) + (link.workTime || 0) + (link.alarmTime || 0);
+            }, 0);
+        }
+
+        function parseChainFromURL() {
+            try {
+                const url = window.location.href;
+                const chainParam = url.split('chainflow://chain/')[1] || url.split('/chain/')[1];
+
+                if (!chainParam) {
+                    throw new Error('No chain parameter found');
+                }
+
+                // Decode the chain data (similar to iOS app logic)
+                const decodedData = decodeURIComponent(chainParam);
+                const chainData = JSON.parse(atob(decodedData));
+
+                return chainData;
+            } catch (error) {
+                console.error('Failed to parse chain:', error);
+                return null;
+            }
+        }
+
+        function updateMetaTags(chainData) {
+            const chainName = chainData.name || 'Shared Workout Chain';
+            const linkCount = chainData.links ? chainData.links.length : 0;
+            const totalTime = chainData.links ? Math.floor(getTotalTime(chainData.links) / 60) : 0;
+            const emotionalHook = getEmotionalCopy(chainName, linkCount);
+
+            const title = `${chainName} - ChainFlow`;
+            const description = `${emotionalHook} This ${linkCount}-exercise chain takes ${totalTime} minutes and will transform how you approach your goals. Ready to build your perfect rhythm?`;
+            const currentUrl = window.location.href;
+
+            // Update page title
+            document.title = title;
+            document.getElementById('dynamic-title').textContent = title;
+
+            // Update Open Graph
+            document.getElementById('og-url').content = currentUrl;
+            document.getElementById('og-title').content = title;
+            document.getElementById('og-description').content = description;
+
+            // Update Twitter
+            document.getElementById('twitter-url').content = currentUrl;
+            document.getElementById('twitter-title').content = title;
+            document.getElementById('twitter-description').content = description;
+        }
+
+        function displayChain(chainData) {
+            const name = chainData.name || 'Unnamed Chain';
+            const links = chainData.links || [];
+            const totalSeconds = getTotalTime(links);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+
+            document.getElementById('chain-name').textContent = name;
+            document.getElementById('chain-stats').textContent =
+                `${links.length} exercise${links.length !== 1 ? 's' : ''} • ${totalMinutes} minute${totalMinutes !== 1 ? 's' : ''} total`;
+
+            const linksContainer = document.getElementById('chain-links');
+            linksContainer.innerHTML = '';
+
+            links.forEach((link, index) => {
+                const linkElement = document.createElement('div');
+                linkElement.className = 'link-item';
+
+                const linkTime = (link.setupTime || 0) + (link.workTime || 0) + (link.alarmTime || 0);
+
+                linkElement.innerHTML = `
+                    <div class="link-name">${link.name || `Exercise ${index + 1}`}</div>
+                    <div class="link-time">${formatTime(linkTime)}</div>
+                `;
+
+                linksContainer.appendChild(linkElement);
+            });
+
+            // Show the chain state
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('chain-state').style.display = 'block';
+        }
+
+        function showError() {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('error-state').style.display = 'block';
+        }
+
+        function openInApp() {
+            // Try to open in the app first
+            const currentUrl = window.location.href;
+            const deepLink = currentUrl.replace('https://chainflow.app', 'chainflow://');
+
+            window.location.href = deepLink;
+
+            // Fallback to App Store if app isn't installed
+            setTimeout(() => {
+                window.location.href = 'https://apps.apple.com/app/chainflow/id6474282726';
+            }, 1000);
+        }
+
+        // Initialize the page
+        window.addEventListener('load', () => {
+            const chainData = parseChainFromURL();
+
+            if (chainData && chainData.links && chainData.links.length > 0) {
+                updateMetaTags(chainData);
+                displayChain(chainData);
+            } else {
+                showError();
+            }
+        });
+    </script>
+</body>
+</html>

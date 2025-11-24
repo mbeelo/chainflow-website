@@ -4,32 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service - ChainFlow</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chainflow.app/terms">
+    <meta property="og:title" content="Terms of Service - ChainFlow">
+    <meta property="og:description" content="Terms and conditions for using ChainFlow to build your perfect rhythm.">
+    <meta property="og:image" content="https://chainflow.app/og-image.svg">
+
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
             background: #1A1A1A;
             color: #FFFFFF;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        .header {
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: inherit;
+        }
+        .logo svg { width: 60px; height: 60px; }
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .logo .chain { color: #FFFFFF; }
+        .logo .flow {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8E53 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Content */
+        .content {
+            padding: 60px 0;
         }
         h1, h2 { color: #FF6B35; }
-        h1 { border-bottom: 2px solid #FF6B35; padding-bottom: 10px; }
-        .contact { background: #2A2A2A; padding: 15px; border-radius: 8px; margin-top: 30px; }
-        a { color: #FF6B35; }
-        .last-updated { color: #888; font-size: 14px; }
-        .nav { margin-bottom: 20px; }
-        .nav a { margin-right: 20px; text-decoration: none; }
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 28px;
+            margin: 40px 0 20px 0;
+        }
+        h3 {
+            font-size: 20px;
+            color: #CCCCCC;
+            margin: 24px 0 12px 0;
+        }
+        .contact {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+        a {
+            color: #FF6B35;
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .last-updated {
+            color: #888;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        ul, ol { margin: 16px 0; padding-left: 20px; }
+        li { margin: 8px 0; }
+        p { margin: 16px 0; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #FF6B35;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+        }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 24px; }
+            .content { padding: 40px 0; }
+        }
     </style>
 </head>
 <body>
-    <div class="nav">
-        <a href="/">← Back to ChainFlow</a>
-    </div>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="/" class="logo">
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="15" y="25" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                    <rect x="40" y="49" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                    <rect x="65" y="73" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                </svg>
+                <h1><span class="chain">Chain</span><span class="flow">Flow</span></h1>
+            </a>
+        </div>
 
-    <h1>Terms of Service</h1>
-    <p class="last-updated">Last updated: November 24, 2024</p>
+        <!-- Content -->
+        <div class="content">
+
+            <h1>Terms of Service</h1>
+            <p class="last-updated">Last updated: November 24, 2024</p>
 
     <h2>Agreement</h2>
     <p>By downloading and using ChainFlow ("the App"), you agree to these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App.</p>
@@ -104,9 +212,21 @@
     <p>These Terms remain in effect until terminated by either party. You may stop using the App at any time. We may terminate access if you violate these Terms.</p>
 
     <div class="contact">
-        <h2>Contact</h2>
+        <h2>Contact Us</h2>
         <p>Questions about these Terms?</p>
         <p>Email: <a href="mailto:support@chainflow.app">support@chainflow.app</a></p>
+        <p>We will respond to your request within 30 days.</p>
+    </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/contact">Contact Support</a>
+            <p style="margin-top: 20px; color: #666;">© 2024 ChainFlow. All rights reserved.</p>
+        </div>
     </div>
 </body>
 </html>
