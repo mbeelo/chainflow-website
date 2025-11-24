@@ -314,6 +314,19 @@
             gap: 12px;
         }
 
+        .time-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .time-label {
+            font-size: 12px;
+            color: #FF6B35;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
         .add-link-button {
             background: #FF6B35;
             color: white;
@@ -643,9 +656,18 @@
                                     <div class="form-group">
                                         <label class="form-label">Timing (seconds)</label>
                                         <div class="time-inputs">
-                                            <input type="number" class="form-input" id="setupInput" placeholder="Setup" min="0" max="300" value="10">
-                                            <input type="number" class="form-input" id="workInput" placeholder="Work" min="1" max="600" value="30">
-                                            <input type="number" class="form-input" id="restInput" placeholder="Rest" min="0" max="300" value="15">
+                                            <div class="time-input-group">
+                                                <label class="time-label">Setup</label>
+                                                <input type="number" class="form-input" id="setupInput" min="0" max="300" value="10">
+                                            </div>
+                                            <div class="time-input-group">
+                                                <label class="time-label">Work</label>
+                                                <input type="number" class="form-input" id="workInput" min="1" max="600" value="30">
+                                            </div>
+                                            <div class="time-input-group">
+                                                <label class="time-label">Rest</label>
+                                                <input type="number" class="form-input" id="restInput" min="0" max="300" value="15">
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="add-link-button" id="addLinkBtn">Add Link</button>
@@ -809,6 +831,63 @@
         // ChainFlow Demo - Exactly Like the Real App
         let demoChain = [];
 
+        // Audio system (matches iOS app - Classic theme frequencies)
+        let audioContext = null;
+        const soundFreqs = {
+            transition: 800,   // Phase transitions
+            countdown: 600,    // Final 5 seconds
+            alarm: 1000,       // Phase end (triple beep)
+            completion: 1200   // Chain complete
+        };
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioContext;
+        }
+
+        function playTone(frequency, duration, delay = 0) {
+            if (!initAudio()) return;
+
+            setTimeout(() => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = frequency;
+                oscillator.type = 'sine';
+
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
+                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            }, delay);
+        }
+
+        function playTransitionSound() {
+            playTone(soundFreqs.transition, 0.1);
+        }
+
+        function playCountdownBeep() {
+            playTone(soundFreqs.countdown, 0.1);
+        }
+
+        function playAlarmSound() {
+            // Triple beep like iOS app
+            playTone(soundFreqs.alarm, 0.2, 0);
+            playTone(soundFreqs.alarm, 0.2, 150);
+            playTone(soundFreqs.alarm, 0.2, 300);
+        }
+
+        function playCompletionSound() {
+            playTone(soundFreqs.completion, 0.5);
+        }
+
         let currentLinkIndex = 0;
         let currentPhase = 'setup';
         let timeRemaining = 10;
@@ -892,9 +971,14 @@
                 isRunning = true;
                 timerInterval = setInterval(() => {
                     if (timeRemaining <= 0) {
+                        playAlarmSound();
                         nextPhase();
                     } else {
                         timeRemaining--;
+                        // Countdown beeps in final 5 seconds (except during alarm)
+                        if (timeRemaining <= 5 && timeRemaining > 0) {
+                            playCountdownBeep();
+                        }
                     }
                     updateTimer();
                 }, 1000);
@@ -930,10 +1014,12 @@
             if (currentPhase === 'setup') {
                 currentPhase = 'work';
                 timeRemaining = currentLink.work;
+                playTransitionSound();
             } else if (currentPhase === 'work') {
                 if (currentLink.rest > 0) {
                     currentPhase = 'rest';
                     timeRemaining = currentLink.rest;
+                    playTransitionSound();
                 } else {
                     nextLink();
                 }
@@ -946,14 +1032,18 @@
             currentLinkIndex++;
             if (currentLinkIndex >= demoChain.length) {
                 // Chain complete - return to build view
-                alert('🎉 Chain Complete! Download ChainFlow to save unlimited chains!');
-                resetTimer();
-                showView('builder');
+                playCompletionSound();
+                setTimeout(() => {
+                    alert('🎉 Chain Complete! Download ChainFlow to save unlimited chains!');
+                    resetTimer();
+                    showView('builder');
+                }, 500);
                 return;
             }
 
             currentPhase = 'setup';
             timeRemaining = demoChain[currentLinkIndex].setup;
+            playTransitionSound();
         }
 
         function addLink() {
