@@ -137,10 +137,11 @@
         .timer-view {
             text-align: center;
             height: 100%;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: space-between;
         }
+        .timer-view.active { display: flex; }
 
         .timer-main {
             flex: 1;
@@ -632,35 +633,8 @@
                         </div>
 
                         <div class="app-content">
-                            <!-- Timer View -->
-                            <div class="timer-view" id="timerView">
-                                <div class="timer-main">
-                                    <div class="link-progress" id="linkProgress">Link 1 of 3</div>
-                                    <div class="exercise-name" id="exerciseName">Push-ups</div>
-                                    <div class="timer-circle setup" id="timerCircle">
-                                        <div class="timer-time" id="timerTime">0:10</div>
-                                        <div class="timer-phase" id="timerPhase">SETUP</div>
-                                    </div>
-                                </div>
-                                <div class="timer-controls">
-                                    <button class="control-button" id="playBtn">▶</button>
-                                    <button class="control-button" id="pauseBtn" disabled>⏸</button>
-                                    <button class="control-button" id="resetBtn">↻</button>
-                                </div>
-                            </div>
-
-                            <!-- Chain List View -->
-                            <div class="chain-list-view" id="chainListView">
-                                <div class="chain-header">
-                                    <div class="chain-title">My Workout</div>
-                                    <button class="edit-button" id="editChainBtn">Edit</button>
-                                </div>
-                                <div id="chainItems"></div>
-                                <button class="start-chain-button" id="startChainBtn">Start Workout</button>
-                            </div>
-
-                            <!-- Chain Builder View -->
-                            <div class="builder-view" id="builderView">
+                            <!-- Chain Builder View (Default) -->
+                            <div class="builder-view active" id="builderView">
                                 <div class="builder-form">
                                     <div class="form-group">
                                         <label class="form-label">Exercise Name</label>
@@ -669,30 +643,33 @@
                                     <div class="form-group">
                                         <label class="form-label">Timing (seconds)</label>
                                         <div class="time-inputs">
-                                            <input type="number" class="form-input" id="setupInput" placeholder="Setup" min="0" max="300">
-                                            <input type="number" class="form-input" id="workInput" placeholder="Work" min="1" max="600">
-                                            <input type="number" class="form-input" id="restInput" placeholder="Rest" min="0" max="300">
+                                            <input type="number" class="form-input" id="setupInput" placeholder="Setup" min="0" max="300" value="10">
+                                            <input type="number" class="form-input" id="workInput" placeholder="Work" min="1" max="600" value="30">
+                                            <input type="number" class="form-input" id="restInput" placeholder="Rest" min="0" max="300" value="15">
                                         </div>
                                     </div>
                                     <button class="add-link-button" id="addLinkBtn">Add Link</button>
                                 </div>
                                 <div class="links-list" id="linksList"></div>
-                                <button class="save-chain-button" id="saveChainBtn">Save Chain</button>
+                                <button class="start-chain-button" id="startChainBtn" disabled>Play Chain</button>
                             </div>
-                        </div>
 
-                        <div class="tab-bar">
-                            <div class="tab-item" id="timerTab">
-                                <div class="tab-icon">⏱️</div>
-                                <div class="tab-label">Timer</div>
-                            </div>
-                            <div class="tab-item active" id="chainTab">
-                                <div class="tab-icon">🔗</div>
-                                <div class="tab-label">Chains</div>
-                            </div>
-                            <div class="tab-item" id="builderTab">
-                                <div class="tab-icon">➕</div>
-                                <div class="tab-label">Build</div>
+                            <!-- Timer View -->
+                            <div class="timer-view" id="timerView">
+                                <div class="timer-main">
+                                    <div class="link-progress" id="linkProgress">Link 1 of 1</div>
+                                    <div class="exercise-name" id="exerciseName">Exercise</div>
+                                    <div class="timer-circle setup" id="timerCircle">
+                                        <div class="timer-time" id="timerTime">0:10</div>
+                                        <div class="timer-phase" id="timerPhase">SETUP</div>
+                                    </div>
+                                </div>
+                                <div class="timer-controls">
+                                    <button class="control-button" id="playBtn">▶</button>
+                                    <button class="control-button" id="pauseBtn" disabled>⏸</button>
+                                    <button class="control-button" id="skipBtn">⏭</button>
+                                    <button class="control-button" id="stopBtn">⏹</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -830,11 +807,7 @@
 
     <script>
         // ChainFlow Demo - Exactly Like the Real App
-        let demoChain = [
-            { name: "Push-ups", setup: 10, work: 30, rest: 15 },
-            { name: "Squats", setup: 10, work: 45, rest: 15 },
-            { name: "Plank", setup: 10, work: 60, rest: 0 }
-        ];
+        let demoChain = [];
 
         let currentLinkIndex = 0;
         let currentPhase = 'setup';
@@ -857,24 +830,14 @@
 
         function showView(view) {
             // Hide all views
-            document.getElementById('timerView').style.display = 'none';
-            document.getElementById('chainListView').style.display = 'none';
-            document.getElementById('builderView').style.display = 'none';
+            document.getElementById('timerView').classList.remove('active');
+            document.getElementById('builderView').classList.remove('active');
 
-            // Remove active from all tabs
-            document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
-
-            // Show selected view and activate tab
+            // Show selected view
             if (view === 'timer') {
-                document.getElementById('timerView').style.display = 'flex';
-                document.getElementById('timerTab').classList.add('active');
-            } else if (view === 'chains') {
-                document.getElementById('chainListView').style.display = 'block';
-                document.getElementById('chainTab').classList.add('active');
-                renderChainList();
+                document.getElementById('timerView').classList.add('active');
             } else if (view === 'builder') {
-                document.getElementById('builderView').style.display = 'block';
-                document.getElementById('builderTab').classList.add('active');
+                document.getElementById('builderView').classList.add('active');
                 renderLinksList();
             }
 
@@ -979,9 +942,10 @@
         function nextLink() {
             currentLinkIndex++;
             if (currentLinkIndex >= demoChain.length) {
-                // Chain complete
+                // Chain complete - return to build view
                 alert('🎉 Chain Complete! Download ChainFlow to save unlimited chains!');
                 resetTimer();
+                showView('builder');
                 return;
             }
 
@@ -1041,26 +1005,28 @@
         }
 
         // Event Listeners
-        document.getElementById('timerTab').addEventListener('click', () => showView('timer'));
-        document.getElementById('chainTab').addEventListener('click', () => showView('chains'));
-        document.getElementById('builderTab').addEventListener('click', () => showView('builder'));
-
         document.getElementById('playBtn').addEventListener('click', startTimer);
         document.getElementById('pauseBtn').addEventListener('click', pauseTimer);
-        document.getElementById('resetBtn').addEventListener('click', resetTimer);
+        document.getElementById('skipBtn').addEventListener('click', () => {
+            if (isRunning) nextPhase();
+        });
+        document.getElementById('stopBtn').addEventListener('click', () => {
+            resetTimer();
+            showView('builder');
+        });
 
         document.getElementById('startChainBtn').addEventListener('click', () => {
-            resetTimer();
-            showView('timer');
+            if (demoChain.length > 0) {
+                resetTimer();
+                showView('timer');
+            }
         });
-        document.getElementById('editChainBtn').addEventListener('click', () => showView('builder'));
 
         document.getElementById('addLinkBtn').addEventListener('click', addLink);
-        document.getElementById('saveChainBtn').addEventListener('click', saveChain);
 
         // Initialize
         loadDemoChain();
-        showView('chains');
+        showView('builder');
         updateTimer();
     </script>
 </body>
