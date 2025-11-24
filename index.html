@@ -91,13 +91,14 @@
         .demo-badge {
             position: absolute;
             top: -8px;
-            right: 10px;
+            right: 25px;
             background: #FF6B35;
             color: white;
             padding: 4px 8px;
             border-radius: 8px;
             font-size: 10px;
             font-weight: 600;
+            white-space: nowrap;
         }
 
         .tab-bar {
@@ -325,6 +326,30 @@
             color: #FF6B35;
             font-weight: 600;
             text-transform: uppercase;
+        }
+
+        /* Custom Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 107, 53, 0.95);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         .add-link-button {
@@ -888,6 +913,36 @@
             playTone(soundFreqs.completion, 0.5);
         }
 
+        // Custom notification system
+        function showNotification(message) {
+            // Remove any existing notifications
+            const existing = document.querySelector('.notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            // Show notification with animation
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+
         let currentLinkIndex = 0;
         let currentPhase = 'setup';
         let timeRemaining = 10;
@@ -1034,7 +1089,7 @@
                 // Chain complete - return to build view
                 playCompletionSound();
                 setTimeout(() => {
-                    alert('🎉 Chain Complete! Download ChainFlow to save unlimited chains!');
+                    showNotification('🎉 Chain Complete! Download ChainFlow to save unlimited chains!');
                     resetTimer();
                     showView('builder');
                 }, 500);
@@ -1053,18 +1108,18 @@
             const rest = parseInt(document.getElementById('restInput').value) || 15;
 
             if (!name) {
-                alert('Please enter an exercise name');
+                showNotification('Please enter an exercise name');
                 return;
             }
 
             if (work < 1) {
-                alert('Work time must be at least 1 second');
+                showNotification('Work time must be at least 1 second');
                 return;
             }
 
             // Demo limitation: only one chain
             if (demoChain.length >= 5) {
-                alert('Demo limited to 5 exercises. Download ChainFlow for unlimited chains!');
+                showNotification('Demo limited to 5 exercises. Download ChainFlow for unlimited chains!');
                 return;
             }
 
@@ -1088,12 +1143,12 @@
 
         function saveChain() {
             if (demoChain.length === 0) {
-                alert('Add some exercises first!');
+                showNotification('Add some exercises first!');
                 return;
             }
 
             saveDemoChain();
-            alert('Chain saved! (In the full app, you can save unlimited chains)');
+            showNotification('Chain saved! (In the full app, you can save unlimited chains)');
             showView('chains');
         }
 
