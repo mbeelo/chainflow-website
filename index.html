@@ -865,6 +865,9 @@
                     <button class="remove-link" onclick="removeLink(${index})">Remove</button>
                 </div>
             `).join('');
+
+            // Enable/disable play button based on chain length
+            document.getElementById('startChainBtn').disabled = demoChain.length === 0;
         }
 
         function updateTimer() {
@@ -979,9 +982,9 @@
 
             // Clear form
             document.getElementById('exerciseInput').value = '';
-            document.getElementById('setupInput').value = '';
-            document.getElementById('workInput').value = '';
-            document.getElementById('restInput').value = '';
+            document.getElementById('setupInput').value = '10';
+            document.getElementById('workInput').value = '30';
+            document.getElementById('restInput').value = '15';
 
             renderLinksList();
             saveDemoChain();
