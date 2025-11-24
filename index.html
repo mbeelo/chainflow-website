@@ -26,9 +26,15 @@
         .hero-content { flex: 1; }
         .hero-demo { flex: 1; display: flex; justify-content: center; }
 
-        .logo { margin-bottom: 30px; }
+        .brand-line {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .logo { margin-bottom: 0; }
         .logo svg { width: 80px; height: 80px; }
-        h1 { font-size: 56px; font-weight: 700; margin-bottom: 20px; line-height: 1.1; }
+        h1 { font-size: 56px; font-weight: 700; margin-bottom: 0; line-height: 1.1; }
         h1 .chain { color: #FFFFFF; }
         h1 .flow { background: linear-gradient(135deg, #FF6B35 0%, #FF8E53 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .tagline { font-size: 24px; color: #CCCCCC; margin-bottom: 30px; }
@@ -640,16 +646,17 @@
         <!-- Hero Section -->
         <div class="hero">
             <div class="hero-content">
-                <div class="logo">
-                    <!-- ChainFlow Logo -->
-                    <svg width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="15" y="25" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
-                        <rect x="40" y="49" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
-                        <rect x="65" y="73" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
-                    </svg>
+                <div class="brand-line">
+                    <div class="logo">
+                        <!-- ChainFlow Logo -->
+                        <svg width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="25" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                            <rect x="40" y="49" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                            <rect x="65" y="73" width="40" height="22" rx="6" ry="6" fill="none" stroke="#FF6B35" stroke-width="4"/>
+                        </svg>
+                    </div>
+                    <h1><span class="chain">Chain</span><span class="flow">Flow</span></h1>
                 </div>
-
-                <h1><span class="chain">Chain</span><span class="flow">Flow</span></h1>
                 <p class="tagline">Sequential Timer for Workouts & Productivity</p>
                 <p class="hero-description">
                     Create custom workout chains that flow seamlessly from one exercise to the next.
