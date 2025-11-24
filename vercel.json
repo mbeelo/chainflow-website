@@ -16,6 +16,10 @@
       "dest": "/terms/index.html"
     },
     {
+      "src": "/contact",
+      "dest": "/contact/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
